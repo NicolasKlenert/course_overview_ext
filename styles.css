@@ -1,0 +1,275 @@
+.block_course_overview_ext_ext .coursechildren {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.block_course_overview_ext .categorypath{
+    text-align: right;
+}
+
+.dir-rtl .block_course_overview_ext .categorypath{
+    text-align: left;
+}
+
+.block_course_overview_ext .content {
+    margin: 0 20px;
+}
+.block_course_overview_ext .content .notice {
+    margin: 5px 0;
+}
+
+.block_course_overview_ext .coursebox {
+    padding: 15px;
+    width: auto;
+}
+
+.block_course_overview_ext .profilepicture {
+    float: left;
+}
+.dir-rtl.block_course_overview_ext .profilepicture {
+    float:right;
+}
+.block_course_overview_ext .welcome_area {
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.block_course_overview_ext .welcome_message {
+    float: left;
+    padding: 10px;
+    vertical-align: middle;
+    border-collapse: separate;
+    clear: none;
+}
+.dir-rtl .block_course_overview_ext_ext .welcome_message {
+    float:right;
+}
+
+.block_course_overview_ext_ext .content h2.title {
+    float: left;
+    margin: 0 0 .5em 0;
+    position: relative;
+}
+.dir-rtl .block_course_overview_ext_ext .content h2.title {
+    float:right;
+}
+
+.block_course_overview_ext .course_title {
+    position: relative;
+}
+
+.editing .block_course_overview_ext .coursebox .cursor {
+    cursor: move;
+    margin-bottom: 2px;
+}
+
+.editing .block_course_overview_ext .move {
+    float: left;
+    padding: 2px 10px 0 0;
+}
+.dir-rtl.editing .block_course_overview_ext .move {
+    float:right;
+    padding: 2px 10px;
+}
+
+.block_course_overview_ext .course_list {
+    width: 100%;
+}
+
+.block_course_overview_ext div.flush {
+    clear: both;
+}
+
+.block_course_overview_ext .activity_info {
+	margin-top: 15px;
+    clear: both;
+}
+.dir-rtl .block_course_overview_ext .activity_info {
+    margin-right: 25px;
+}
+
+.block_course_overview_ext .activity_overview {
+    padding: 2px;
+}
+.block_course_overview_ext .activity_overview img.iconlarge { vertical-align: text-bottom; margin-right: 6px; }
+.dir-rtl .block_course_overview_ext .activity_overview img.iconlarge { margin-left: 6px; margin-right: 0;}
+
+.block_course_overview_ext .singleselect {
+    text-align: left;
+    margin: 0 0 .3em 0; /* ISIS2 Designanpassung $JE */
+}
+.dir-rtl .block_course_overview_ext .singleselect {
+    text-align: right;
+}
+
+.block_course_overview_ext .content .course_list .movehere{
+    margin-bottom: 15px;
+}
+
+/* ISIS2 Designanpassung $JE */
+.block_course_overview_ext .singleselect label {
+    float: left;
+    width: 20em;
+    padding-top: .3em;
+    
+}
+
+/* ISIS2 Designanpassung $JE */
+.block_course_overview_ext .singleselect select {
+    width: 22em;
+}
+
+/* ISIS2 Designanpassung*/
+div img.iconextra {
+    position:relative;
+    left:10px;
+    margin-right:-16px;
+}
+
+/* view Gestaltung */
+
+.editing .view.co_pics .changecolor{
+	float: right;
+	position: relative;
+	cursor: pointer;
+}
+
+.editing .view.co_pics .changecolor .co_popup{
+	/*width: 96px;*/
+	padding: 3px;
+	cursor: auto;
+}
+
+.editing .view.co_pics .changecolor .co_popup .color{
+	width: 20px;
+	height: 20px;
+	border: 1px solid #CCC;
+	float: left;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.editing .view .move {
+  padding: 0;
+}
+.view .block {
+  overflow: overlay;
+}
+.view .coursebox {
+  min-height: 36px;
+  float: left;
+  margin: 5px 10px 10px 10px;
+  padding: 15px;
+  padding-bottom: 39px;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  box-shadow: #888888 2px 2px 4px;
+  background-size: cover;
+  background-color: #ffffff;
+  position: relative; /* damit die Icons immer an der selben Stelle stehen, egal wie groß der Text ist */
+}
+.block.view .content {
+  margin: 0;
+  padding: 8px 0 0 0;
+}
+.view .content .box.notice {
+  padding: 4px 14px 0 14px;
+}
+.view .editing .block_course_overview .move {
+  position: absolute;
+}
+.view .jsenabled .collapsed .collapsibleregion {
+  visibility: visible;
+}
+.view .activity_overview {
+    display: inline;
+    position: relative;
+}
+.view .content h2.title {			
+	text-align: center;
+	margin: 0 20px;
+}
+
+/* damit die Icons immer an der selben Stelle stehen, egal wie groß der Text ist */
+.block_course_overview_ext.view .activity_info {
+	position: absolute;
+    bottom: 5px;
+    margin-top: 0;
+}
+
+
+/*Popup css*/
+.co_popup {
+	position: absolute;
+	right: auto;
+	left: 0px;
+	z-index: 100;
+	width: 430px;
+	background-color: white;
+	box-shadow: rgb(136, 136, 136) 4px 4px 6px;
+	border: 2px solid rgb(234, 234, 234);
+	border-radius: 5px;
+	
+}
+
+.co_popup.invisible {
+	display: none;
+}
+.co_popup.visible {
+	display: block;
+}
+
+.co_saveColor > div{
+	display: inline-block;
+}
+
+.co_saveColor .singlebutton{
+	width: 22em;
+}
+
+.co_saveColor .singlebutton div{
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.co_saveColor .singlebutton div input{
+	margin: 0;
+}
+
+.co_midscreen_container{
+	width: 100%;
+    height: 100%;
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    position: fixed;
+    visibility: hidden;
+    display: none;
+    background-color: rgba(22,22,22,0.1);
+}
+
+.co_midscreen_container.visible{
+	visibility: visible;
+    display: block;
+}
+
+.co_notification {
+	/* width: 20em; */
+	width: 30%;
+	position: relative;
+    margin: 0 auto;
+    top: 40%;
+}
+
+/*Kachelbilder*/
+.view.co_pics{
+	bacground-size: contain;
+}
+
+.view.co_pics .content .course_title {			
+	background-color: white;
+	background-color: rgba(255,255,255,0.9);
+	border-radius: 10px;
+	padding: 3px 6px;
+	/* margin: -0.5em 5px 0.5em 5px; */
+}
