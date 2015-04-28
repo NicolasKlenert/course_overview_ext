@@ -77,7 +77,9 @@ if($ADMIN->fulltree) {
 	$settings->add(new admin_setting_configcolourpicker('block_course_overview_ext/colorpicker', new lang_string('colorpicker','block_course_overview_ext'),
 			new lang_string('colorpickerdescr','block_course_overview_ext'),null));
 	
-	$settings->add(new admin_setting_configtext('block_course_overview_ext/columns', new lang_string('columns','block_course_overview_ext'), new lang_string('columnsdescr','block_course_overview_ext'), '3'));
+	$settings->add(new admin_setting_configcheckbox('block_course_overview_ext/tiles', new lang_string('tiles','block_course_overview_ext'), new lang_string('tilesdescr','block_course_overview_ext'), true));
 	
 	$settings->add(new admin_setting_heading('block_course_overview_ext/moresetting', new lang_string('moresetting','block_course_overview_ext'), new lang_string('moresettingdescr','block_course_overview_ext',$link)));
+	
+	$settings->add(new admin_setting_configtext('block_course_overview_ext/colorcolumns', new lang_string('colorcolumns','block_course_overview_ext'), new lang_string('colorcolumnsdescr','block_course_overview_ext'), '3', PARAM_INT));
 }

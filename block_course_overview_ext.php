@@ -37,7 +37,7 @@ class block_course_overview_ext extends block_course_overview{
     public function init() {
         $this->title   = get_string('pluginname', 'block_course_overview_ext');
         
-        //ISIS2 view is needed here, because it determine the block's classes
+        //view is needed here, because it determine the block's classes
         $updateview = optional_param("myview", -1, PARAM_INT);
         if ($updateview >= 0) {
         	set_user_preference("course_overview_view", $updateview);
@@ -45,7 +45,7 @@ class block_course_overview_ext extends block_course_overview{
         	unset($_GET['myview']);
         	unset($_POST['myview']);
         }
-        //ISIS2 End
+        //End
     }
 
     /**
@@ -73,12 +73,11 @@ class block_course_overview_ext extends block_course_overview{
         if ($updatemynumber >= 0) {
             block_course_overview_update_mynumber($updatemynumber);
         }
-        //ISIS2 "mytimestart" als Einstellung setzen
+        //"mytimestart" als Einstellung setzen
         $updatemytimestart = optional_param("mytimestart", -1, PARAM_INT);
         if ($updatemytimestart >= 0) {
         	set_user_preference("course_overview_timestart_for_log", $updatemytimestart);
         }
-        //ISIS2 Endfix $JE 2014/06/18
 
         profile_load_custom_fields($USER);
 
@@ -134,6 +133,9 @@ class block_course_overview_ext extends block_course_overview{
        	}
        	if(get_user_preferences("course_overview_view",0) == 2){
        		$attributes['class'] .= ' co_pics';
+       	}
+       	if(get_config('block_course_overview_ext','tiles')){
+       		$attributes['class'] .= ' tiles';
        	}
        	return $attributes;
      }

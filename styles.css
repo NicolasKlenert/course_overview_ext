@@ -157,7 +157,6 @@ div img.iconextra {
 }
 .view .coursebox {
   min-height: 36px;
-  float: left;
   margin: 5px 10px 10px 10px;
   padding: 15px;
   padding-bottom: 39px;
@@ -168,6 +167,12 @@ div img.iconextra {
   background-color: #ffffff;
   position: relative; /* damit die Icons immer an der selben Stelle stehen, egal wie groß der Text ist */
 }
+
+.view.tiles .coursebox{
+	float: left;
+  /* display: inline-table;		/* wenn dies nicht geht, mache wieder float */
+}
+
 .block.view .content {
   margin: 0;
   padding: 8px 0 0 0;
@@ -210,6 +215,12 @@ div img.iconextra {
 	border: 2px solid rgb(234, 234, 234);
 	border-radius: 5px;
 	
+}
+
+/* Popup for Changecolor*/
+.changecolor .co_popup {
+	right: 0px;
+	left: auto;
 }
 
 .co_popup.invisible {
@@ -262,9 +273,9 @@ div img.iconextra {
 }
 
 /*Kachelbilder*/
-.view.co_pics{
-	bacground-size: contain;
-}
+/* .view.co_pics{
+	background-size: contain;
+} */
 
 .view.co_pics .content .course_title {			
 	background-color: white;

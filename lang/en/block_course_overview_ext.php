@@ -50,9 +50,11 @@ $string["colorsdescr"] = 'Avaible Colors as Background of the Tiles in Hex-Code'
 $string["colorfail"] = 'Not all of the string could be interpreted as Color-Code (and therefore deleted)';
 $string["colorpicker"] = 'Helpsetting';
 $string["colorpickerdescr"] = 'Setting to help to choose hexcode of colors';
-$string["columns"] = 'Count columns';
-$string["columnsdescr"] = 'How many columns has the color-picker';
+$string["colorcolumns"] = 'Count columns';
+$string["colorcolumnsdescr"] = 'How many columns has the color-picker';
 $string["moresetting"] = 'More Settings';
 $string["moresettingdescr"] = 'This block is an extension of the block "course_overview", so this settings implies also to this block. Look <a href="{$a}"> here </a>.';
 $string["basicsetting"] = 'Settings of this block';
 $string["basicsettingdescr"] = 'These are the settings, which are only used by this block.';
+$string["tiles"] = 'Courseboxes as tiles';
+$string["tilesdescr"] = 'Do you want to resize the courseboxes?';

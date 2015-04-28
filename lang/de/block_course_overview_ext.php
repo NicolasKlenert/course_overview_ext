@@ -50,9 +50,11 @@ $string["colorsdescr"] = 'Mögliche Hintergrundfarben der Kacheln als Hex-Code a
 $string["colorfail"] = 'Es konnte nicht alles als Farben-Hexcode interpretiert werden (und daher gelöscht)';
 $string["colorpicker"] = 'Hilfseinstellung';
 $string["colorpickerdescr"] = 'Hier kannst du einfach Farben und deren Hexcode auswählen';
-$string["columns"] = 'Anzahl Spalten';
-$string["columnsdescr"] = 'Gibt an, wie viele Spalten die Auswahl der Farben haben soll';
+$string["colorcolumns"] = 'Anzahl Spalten';
+$string["colorcolumnsdescr"] = 'Gibt an, wie viele Spalten die Auswahl der Farben haben soll';
 $string["moresetting"] = 'Mehr Einstellungsmöglichkeiten';
 $string["moresettingdescr"] = 'Dieser Block ist eine Erweiterung von "course_overview", sodass die Einstellung dieses Blockes auch genutzt werden. Schaue <a href="{$a}"> hier </a> nach.';
 $string["basicsetting"] = 'Einstellungen dieses Blocks';
 $string["basicsettingdescr"] = 'Einstellungen speziell für dieses Block.';
+$string["tiles"] = 'Kursboxen als Kacheln';
+$string["tilesdescr"] = 'Willst du, dass die Kurse als Kacheln angezeigt werden?';

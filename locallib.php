@@ -260,13 +260,15 @@ function block_course_overview_ext_view(moodle_url $url, $name = "myview")
 	return $select;
 }
 
-function block_course_overview_ext_saveColors(moodle_url $url, $name = 'saveColor'){
+function block_course_overview_ext_saveColors(moodle_url $url, $class = '',$name = 'saveColor'){
 	
 	if(isset($url) && $url instanceof moodle_url){
 		$url->params(array($name=>"true"));
 		$select = new single_button($url, get_string('co_save_colors','block_course_overview_ext'));
+		$select->class .= $class;
 	}else{
 		$select = new single_button(new moodle_url("/my/index.php",array($name => true)), get_string('co_save_colors','block_course_overview_ext'));
+		$select->class .= $class;
 	}
 	return $select;
 }

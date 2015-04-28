@@ -34,7 +34,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
      * @return string html to be displayed in course_overview block
      */
     public function course_overview($courses, $overviews) {
-    	global $DB;					//ISIS2: Variable hinzugefügt
+    	global $DB;
         $html = '';
         $config = get_config('block_course_overview');
         if ($config->showcategories != BLOCKS_COURSE_OVERVIEW_SHOWCATEGORIES_NONE) {
@@ -85,11 +85,11 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
             if ($ismovingcourse && ($course->id == $movingcourseid)) {
                 continue;
             }
-            //ISIS2 finde heraus welcher Kurs zur welchen Fakultät gehört
+            //finde heraus welcher Kurs zur welchen Fakultät gehört
             $temp = $DB->get_field('course_categories', 'path', array('id'=> $course->category));
             $temp = explode('/', $temp);
             $html .= $this->output->box_start('coursebox fak-'. $temp[1], "course-{$course->id}");
-            //ISIS2 End
+            //End
             $html .= html_writer::start_tag('div', array('class' => 'course_title'));
             // If user is editing, then add move icons.
             if ($userediting && !$ismovingcourse) {
@@ -101,7 +101,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 $moveurl = html_writer::link($moveurl, $moveicon);
                 $html .= html_writer::tag('div', $moveurl, array('class' => 'move'));
                 
-                //ISIS2 Farbpalette 
+                //Farbpalette 
                 if (get_user_preferences("course_overview_view",-1) == 2) {
 
                 	$coloricon = html_writer::empty_tag('img',
@@ -110,14 +110,14 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 			'title' => get_string('selectcolor','editor'))
                 	);
                 	
-                	$width = clean_param(get_config('block_course_overview_ext','columns'),PARAM_INT) * 32;
+                	$width = clean_param(get_config('block_course_overview_ext','colorcolumns'),PARAM_INT) * 32;
                 	
                 	$html .= $this->popup_region($this->get_colors($course->id),'colorpicker_'.$course->id ,$course->id, $coloricon, 'changecolor',array('style' => 'width: '.$width.'px;')); 
                 }
                 
             }
             
-            //ISIS2 Hintergrundfarbe einstellen
+            //Hintergrundfarbe einstellen
             if(get_user_preferences("course_overview_view",-1) == 2 && ($string = get_user_preferences('course_overview_coursecolor')) != null){
             	$arr = unserialize($string);
             	$courselist = array_keys($arr);
@@ -206,21 +206,20 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     protected function activity_display($cid, $overview) {
         $output = html_writer::start_tag('div', array('class' => 'activity_info'));
         foreach (array_keys($overview) as $module) {
-        	//ISIS2 Prüfen, ob der Schlüssel besondere Infos enthält, die wir in block_course_overview_ext_structural_changes eingefügt haben $JE 2014/06/12
-        	//ISIS2 Danach alles wieder "normal" machen, damit der alte Code genutzt werden kann
+        	//Prüfen, ob der Schlüssel besondere Infos enthält, die wir in block_course_overview_ext_structural_changes eingefügt haben $JE 2014/06/12
+        	//Danach alles wieder "normal" machen, damit der alte Code genutzt werden kann
         	$onlystructural = (substr($module, 0, 5) === "isis2"); // Dieser Schlüssel existiert nur, wenn es keine weitere Info zu dem Modul gibt
         	$action = "";
         	if ($onlystructural) {
-        		//ISIS2 $overview[isis2modname] = array(0 => "add"|"update"|"delete", 1 => Detailtext zum ausklappen)
+        		//$overview[isis2modname] = array(0 => "add"|"update"|"delete", 1 => Detailtext zum ausklappen)
         		$action = $overview[$module]["action"];
         		$infotext = $overview[$module]["infotext"];
         		$module = substr($module, 5);
         	}
-        	//ISIS2 Endfix $JE 2014/06/12
             $output .= html_writer::start_tag('div', array('class' => 'activity_overview'));
             $url = new moodle_url("/mod/$module/index.php", array('id' => $cid));
             $modulename = get_string('modulename', $module);
-            //ISIS2 statt $modulename die ganze text-info in den link reinschreiben
+            //statt $modulename die ganze text-info in den link reinschreiben
             $textinfo = '';
             if (get_string_manager()->string_exists("activityoverview", $module)) {
             	$textinfo .= get_string("activityoverview", $module);
@@ -229,19 +228,18 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
             }
             $icontext = html_writer::link($url, $this->output->pix_icon('icon', $textinfo, 'mod_'.$module, array('class'=>'iconlarge')));
 			
-            //ISIS2 NUR Aktualisierungen der Aktivitäten anzeigen (sonst ist die Meldung in $overview[$module] eingebettet) $JE 2014/06/12
+            //NUR Aktualisierungen der Aktivitäten anzeigen (sonst ist die Meldung in $overview[$module] eingebettet) $JE 2014/06/12
             if ($onlystructural) {
-	           	//ISIS2 $icontext wird neu gesetzt -> das hat den Vorteil, dass wir nur Code hinzufügen und der alte erhalten bleibt
+	           	//$icontext wird neu gesetzt -> das hat den Vorteil, dass wir nur Code hinzufügen und der alte erhalten bleibt
 	           	$textinfo = get_string($action, "moodle", $modulename);
 				$icontext = $this->output->pix_icon("i/" . $action, $textinfo, "local_isis", array("class" => "iconextra"))
 							. $this->output->pix_icon('icon', $modulename, "mod_" . $module, array("class" => "iconlarge"));
             	$icontext = html_writer::link($url,$icontext);
 
-	           	//ISIS2 setzen von $overview[$module] um den "Abschluss" des alten Codes zu verwenden
-	           	//ISIS2 zur Erinnerung: In $module wurde "isis2" oben entfernt, d.h. $module ist jetzt wieder der Modulkurzname
+	           	//setzen von $overview[$module] um den "Abschluss" des alten Codes zu verwenden
+	           	//zur Erinnerung: In $module wurde "isis2" oben entfernt, d.h. $module ist jetzt wieder der Modulkurzname
 	           	$overview[$module] = $infotext;
             }
-            //ISIS2 Endfix $JE 2014/06/12
 
             if(get_user_preferences("course_overview_view",-1) < 1){
             	// Add collapsible region with overview text in it.
@@ -257,9 +255,11 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         }
         $output .= html_writer::end_tag('div');
         
-        //ISIS2: initialise js for view if neededs
+        //initialise js for view if neededs
         if(get_user_preferences("course_overview_view",-1) > 0){
-        	$this->page->requires->js_init_call('M.block_course_overview_ext.tiles.init');
+        	if(get_config('block_course_overview_ext','tiles')){
+        		$this->page->requires->js_init_call('M.block_course_overview_ext.tiles.init');
+        	}
         	$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
         }
         return $output;
@@ -282,25 +282,26 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         $select = new single_select($url, 'mynumber', $options, block_course_overview_get_max_user_courses(), array());
         $select->set_label(get_string('numtodisplay', 'block_course_overview'));
         $output .= $this->output->render($select);
-        //ISIS2 Startzeitselektor für "neueste Aktivitäten" $JE 2014/06/18
+        //Startzeitselektor für "neueste Aktivitäten" $JE 2014/06/18
         $select = block_course_overview_ext_timestart_select($url);
         $output .= $this->output->render($select);
-        //ISIS2 Endfix $JE 2014/06/18
-        //ISIS2 Selektor für Lookänderung
+        //Selektor für Lookänderung
         $select = block_course_overview_ext_view($url);
         $output .= $this->output->render($select);
-        //ISIS2 End
         
-		//ISIS2 Button zur Speicherung der Farben (Link wird von Javascript überschrieben und verändert!)
+		//Button zur Speicherung der Farben (Link wird von Javascript überschrieben und verändert!)
     	if (get_user_preferences("course_overview_view",-1) == 2){
-    		$select = block_course_overview_ext_saveColors($url);
-    		$select = $this->output->render($select) . $this->mid_screen('Erfolgreich gespeichert!');
+    		$select = block_course_overview_ext_saveColors($url, ' btn-disabled');
+    		$select = $this->output->render($select) 
+    		//only if you want mid-screen
+    		. $this->mid_screen('Erfolgreich gespeichert!');
     		
     		$button = block_course_overview_ext_resetColors($url);
     		$button = $this->output->render($button);
     		
     		$output .= html_writer::div($select . $button,'co_saveColor');
-    		$this->page->requires->js_init_call('M.block_course_overview_ext.saveColor',array('.co_saveColor input','.co_midscreen_container'));
+    		//last paremeter only if you want mid-screen => option?
+    		$this->page->requires->js_init_call('M.block_course_overview_ext.saveColor',array('.co_saveColor .singlebutton','.co_midscreen_container'));		//(something,'.co_midscreen_container')
     	}
         
         $output .= $this->output->box_end();
@@ -316,14 +317,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
      * @author Nicolas Klenert
      */
     protected function popup_region($content, $id, $cid, $caption, $class = null, $array = null){
-//     	if($class){
-//     		$output  = '<span id="'.$id.'" class ="'.$class.'">';
-//     	}else{
-//     		$output  = '<span id="'.$id.'">';
-//     	}
-//     	$output .= $caption . '<div id="'.$id.'_popup" class="co_popup invisible">'.$content.'</div>';		//invisible
-//     	$output .= '</span>';
-    	
+   	
     	if($array){
     		$array = array('id'=>$id.'_popup') + $array;
     	}else{
@@ -343,7 +337,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     	$colors = explode(' ', $string);
     	foreach ($colors as $key => $color){
     		$output .= html_writer::div(null,'color',array('style' => 'background-color:'.$color.';','id' => 'colorpicker_'.$cid.'_'.$key));
-    		$this->page->requires->js_init_call('M.block_course_overview_ext.isColor', array('colorpicker_'.$cid.'_'.$key,$color,'course-'.$cid));
+    		$this->page->requires->js_init_call('M.block_course_overview_ext.isColor', array('colorpicker_'.$cid.'_'.$key,$color,'course-'.$cid, '.co_saveColor .singlebutton'));
     	}
     	return $output;
     }
