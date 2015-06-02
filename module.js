@@ -2,15 +2,16 @@ M.block_course_overview_ext = M.block_course_overview_ext || {
 		//M.block_course_overview_ext.superclass.constructor.call(this,Y);
 }
 
-M.block_course_overview_ext.tiles = {
-	init: function() {
-		M.block_course_overview_ext.Y = Y;
+M.block_course_overview_ext.addresize = function(Y){
+	
+//	M.block_course_overview_ext.Y = Y;
 	  
-		window.addEventListener("resize", resize, true);
-		resize();
+	window.addEventListener("resize", resize, true);
+	resize();
 	  
-	  function resize(){
-		  var course_list = Y.one(".course_list");
+	//die resize-funktion wird 3mal drangehangen....warum auch immer....
+	 function resize(){
+		  var course_list = Y.one(".block_course_overview_ext .course_list");
 		  if(course_list){
 			 var array = course_list.all(".coursebox");
 			 var columns = 3;
@@ -58,7 +59,7 @@ M.block_course_overview_ext.tiles = {
 	 
  //------------------------- 
   
-  }
+
 };
 
 M.block_course_overview_ext.pop = function(Y, id, cid) {

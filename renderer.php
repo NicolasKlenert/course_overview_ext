@@ -192,6 +192,15 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 $html .= html_writer::tag('div', $moveurl, array('class' => 'movehere'));
             }
         }
+        
+        //initialise js for view if neededs
+        if(get_user_preferences("course_overview_view",-1) > 0){
+        	if(get_config('block_course_overview_ext','tiles')){
+        		$this->page->requires->js_init_call('M.block_course_overview_ext.addresize');
+        	}
+        	$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
+        }
+        
         // Wrap course list in a div and return.
         return html_writer::tag('div', $html, array('class' => 'course_list clearfix'));		//ISIS2 clearfix hinzugefügt
     }
@@ -255,13 +264,6 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         }
         $output .= html_writer::end_tag('div');
         
-        //initialise js for view if neededs
-        if(get_user_preferences("course_overview_view",-1) > 0){
-        	if(get_config('block_course_overview_ext','tiles')){
-        		$this->page->requires->js_init_call('M.block_course_overview_ext.tiles.init');
-        	}
-        	$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
-        }
         return $output;
     }
 
