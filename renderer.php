@@ -152,7 +152,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 }
             }
 
-            // If user is moving courses, then down't show overview.
+            // If user is moving courses, then don't show overview.
             if (isset($overviews[$course->id]) && !$ismovingcourse) {
                 $html .= $this->activity_display($course->id, $overviews[$course->id]);
             }
@@ -196,7 +196,8 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         //initialise js for view if neededs
         if(get_user_preferences("course_overview_view",-1) > 0){
         	if(get_config('block_course_overview_ext','tiles')){
-        		$this->page->requires->js_init_call('M.block_course_overview_ext.addresize');
+        		//$this->page->requires->js_init_call('M.block_course_overview_ext.addresize');
+        		$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'init');
         	}
         	$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
         }
@@ -206,7 +207,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     }
 
     /**
-     * Coustuct activities overview for a course
+     * Construct activities overview for a course
      *
      * @param int $cid course id
      * @param array $overview overview of activities in course

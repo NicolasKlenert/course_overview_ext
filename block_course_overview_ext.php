@@ -131,6 +131,7 @@ class block_course_overview_ext extends block_course_overview{
        	if(get_user_preferences("course_overview_view",0) > 0){
        		$attributes['class'] .= ' view';
        	}
+       	//deprecated
        	if(get_user_preferences("course_overview_view",0) == 2){
        		$attributes['class'] .= ' co_pics';
        	}
