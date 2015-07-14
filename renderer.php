@@ -112,7 +112,8 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 	
                 	$width = clean_param(get_config('block_course_overview_ext','colorcolumns'),PARAM_INT) * 32;
                 	
-                	$html .= $this->popup_region($this->get_colors($course->id),'colorpicker_'.$course->id ,$course->id, $coloricon, 'changecolor',array('style' => 'width: '.$width.'px;')); 
+                	$html .= $this->popup_region($this->get_colors($course->id),'colorpicker_'.$course->id ,$course->id, $coloricon, 'changecolor',array('style' => 'width: '.$width.'px;'));
+                	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'isColor', array('colorpicker_'.$course->id.'_popup'));	//das popup kommt von der funktion popup_region
                 }
                 
             }
@@ -123,7 +124,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
             	$courselist = array_keys($arr);
             	$colorlist = array_values($arr);
             	
-            	$this->page->requires->js_init_call('M.block_course_overview_ext.setColors', array($courselist,$colorlist));
+            	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'setColor',array($courselist,$colorlist));
             }          
 
             // No need to pass title through s() here as it will be done automatically by html_writer.
@@ -199,7 +200,8 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         		//$this->page->requires->js_init_call('M.block_course_overview_ext.addresize');
         		$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'init');
         	}
-        	$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
+        	//$this->page->requires->js_init_call('M.block_course_overview_ext.resetPop');
+        	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'closeAllPopups');
         }
         
         // Wrap course list in a div and return.
@@ -304,7 +306,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     		
     		$output .= html_writer::div($select . $button,'co_saveColor');
     		//last paremeter only if you want mid-screen => option?
-    		$this->page->requires->js_init_call('M.block_course_overview_ext.saveColor',array('.co_saveColor .singlebutton','.co_midscreen_container'));		//(something,'.co_midscreen_container')
+    		$this->page->requires->js_call_amd('block_course_overview_ext/tiles','saveColor',array('.co_saveColor .singlebutton:first-child','.co_midscreen_container'));		//(something,'.co_midscreen_container')
     	}
         
         $output .= $this->output->box_end();
@@ -327,9 +329,10 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     		$array = array('id'=>$id.'_popup');
     	}
     	
-    	$output = html_writer::span($caption . html_writer::div($content,'co_popup invisible',$array),$class,array('id'=>$id));
+    	$output = html_writer::span($caption . html_writer::div($content,'co_popup',$array),$class,array('id'=>$id));
     	
-    	$this->page->requires->js_init_call('M.block_course_overview_ext.pop', array($id,$cid));
+    	//$this->page->requires->js_init_call('M.block_course_overview_ext.pop', array($id,$cid));
+    	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'pop',array($id));
     	
     	return $output;
     }
@@ -340,13 +343,13 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     	$colors = explode(' ', $string);
     	foreach ($colors as $key => $color){
     		$output .= html_writer::div(null,'color',array('style' => 'background-color:'.$color.';','id' => 'colorpicker_'.$cid.'_'.$key));
-    		$this->page->requires->js_init_call('M.block_course_overview_ext.isColor', array('colorpicker_'.$cid.'_'.$key,$color,'course-'.$cid, '.co_saveColor .singlebutton'));
+    		//$this->page->requires->js_init_call('M.block_course_overview_ext.isColor', array('colorpicker_'.$cid.'_'.$key,$color,'course-'.$cid, '.co_saveColor .singlebutton'));
     	}
     	return $output;
     }
     
     protected function mid_screen($content){
-    	$output = html_writer::div(html_writer::div(html_writer::tag('strong', $content),'co_notification alert alert-success'),'co_midscreen_container invisible');
+    	$output = html_writer::div(html_writer::div(html_writer::tag('strong', $content),'co_notification alert alert-success'),'co_midscreen_container');
     	return $output;
     }
 

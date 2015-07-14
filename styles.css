@@ -223,19 +223,16 @@ div img.iconextra {
 	left: auto;
 }
 
-.co_popup.invisible {
+.co_popup{
 	display: none;
 }
 .co_popup.visible {
 	display: block;
 }
 
-.co_saveColor > div{
-	display: inline-block;
-}
-
 .co_saveColor .singlebutton{
 	width: 22em;
+	display: inline-block;
 }
 
 .co_saveColor .singlebutton div{
@@ -248,20 +245,14 @@ div img.iconextra {
 }
 
 .co_midscreen_container{
-	width: 100%;
+    width: 100%;
     height: 100%;
     z-index: 999999;
     top: 0;
     left: 0;
     position: fixed;
-    visibility: hidden;
     display: none;
     background-color: rgba(22,22,22,0.1);
-}
-
-.co_midscreen_container.visible{
-	visibility: visible;
-    display: block;
 }
 
 .co_notification {

@@ -21,7 +21,6 @@ define(['jquery'], function($) {
 		while(i < sizearray.length && sizearray[i] < width){
 			++i;
 		}
-		window.console.log(prozentarray[i]+'%');
 		o.width(prozentarray[i]+'%');
 		//o.outerWidth(prozentarray[i]+'%');
 		//o.css("width",sizearray[i]);
@@ -44,16 +43,12 @@ define(['jquery'], function($) {
     var resize = function(){
 
 		  if(course_list){
-			window.console.log('courseliste exestiert');
 			var array = course_list.children(".coursebox");
 			 //var height = 81;
 		  	var margin = 20;
 		  	var padding = 35; //padding of 30 and border of 2 +3 wegen dem scrollbalken
 		  	
-		  	window.console.log(array);
-		  if(array && setColumns()){
-			  window.console.log('courseboxen exestieren');
-			  
+		  if(array && setColumns()){			  
 			  var width = (course_list.width()/columns)-margin;		//-5			
 			  //columns-1 //die -10 sind nur um rechts ein bisschen platz zu haben..damit ein scrollbalken nicht alles zerstört
 			  sizearray = [width - padding];
@@ -68,19 +63,9 @@ define(['jquery'], function($) {
 				  prozentarray[i] = (sizearray[i]/course_list.width())*100;
 			  }
 			  
-			  window.console.log(course_list.width());
-			  window.console.log(sizearray);
-			  window.console.log(prozentarray);
 			  array.each(function (){
-		  			setneededWidth($(this));	//.one(".course_title .title a") und dafür das bei der fkt weg
+		  			setneededWidth($(this));
 		  		});
-				  		
-		  			
-//						  array.each(function (node){
-//				  				node.remove("width");		//funktioniert nicht
-//				  			});
-		  			
-		  			//LÖSUNG-> berechne einmalig für jeden Sprung die prozente von einem Block!
 		  			
 		  	}
 		  
@@ -89,30 +74,120 @@ define(['jquery'], function($) {
 	  
      };
  
-    /**
-     * @constructor
-     * @alias module:block_overview/tiles
-     */
-    /* var Tiles = function() {
-    	
-    	this.addresize = function(){
-        	
-//        	M.block_course_overview_ext.Y = Y;
-        	  
-        	window.addEventListener("resize", resize, true);
-        	resize();
-        	  
-        	//die resize-funktion wird 3mal drangehangen....warum auch immer....
-    	
-    	};
-    }; */
- 
+     var popup = function(event){
+    	//mache alle popups invisible
+    	 $(".co_popup").removeClass("visible");	//:not(#"+event.data.id+")
+    	 //änder die sichtbarkeit des eigenen popups
+    	 $("#"+event.data.id+" .co_popup").toggleClass("visible");
+    	 //stop propagation
+    	 return false;
+     };
+     
+     var close_all_popups = function(){
+    	 $(".co_popup").removeClass("visible");
+     };
+     
+     var is_color = function(event){
+    	 var color = $(event.target).css("backgroundColor");
+    	 //color = rgb2hex(color);
+    	 $("#"+event.data.id).parents(".coursebox").css("backgroundColor",color);
+    	 $(".co_saveColor .singlebutton").removeClass("btn-disabled");
+    	 return false;
+     };  
+     
+     var fadeOut = function(notification){
+    	 $(notification).css("display","block");
+    	 $(notification).fadeOut("slow");
+     };
+     
+     var rgb2hex = function(rgb){
+    	 if (  rgb.search("rgb") == -1 ) {
+    	      return rgb;
+    	 } else {
+    		 rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+    	     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]); 
+    	 } 
+     };
+     
+     var hex = function(x){
+    	  return ("0" + parseInt(x).toString(16)).slice(-2);
+     };
+     
+     var save_color = function(event){
+    	 var courselist = [];
+    	 var colorlist = [];
+    	 
+    	 $('.course_list').children().each(function(index,element){
+    		courselist[courselist.length] = $(element).attr('id').substring(7);
+    		colorlist[colorlist.length] = rgb2hex($(element).css('backgroundColor')).toUpperCase();
+    	 });
+    	 
+    	 var params = {
+      	       sesskey : M.cfg.sesskey,
+      	       courselist : courselist,
+      	       colorlist : colorlist
+      	 };
+    	 
+    	 var callback = function(){};
+    	 if($(".co-notification")){
+    		 callback = function(){
+    			 fadeOut(event.data.notification);
+    			 $(event.data.button).addClass("btn-disabled");
+    		 };
+    	 }
+    	     
+    	 //window.console.log($.param(params));
+    	 
+    	 $.ajax(M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php', {
+	        method: 'POST',
+	        data: $.param(params),
+	        context: M.block_course_overview_ext,
+	        success: function(){
+	        	//window.console.log("success");
+	        },
+    	 	error: function(){		//xhr,text,error
+    	 		//window.console.log("error");
+    	 		//window.console.log(error);
+    	 		//window.console.log(xhr.getResponseHeader());
+    	 	},
+	        complete: function(){
+	        	callback();
+	        }
+	    });
+    	 
+//    	 $.post(
+//    			M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php',
+//    			params,
+//    			callback
+//    	 ); 		    
+    		    
+    	 return false;	// notwendig?
+     };
+     
     return {
     	init: function(){
-    		window.console.log('init wurde aufgerufen');
     		resize();
     		$(window).resize(resize);
     		
+    	},
+    	pop: function(id){
+    		//statt jeder id diesem event zu geben, nutze jquerys ".on()" mit der selector möglichkeit
+    		$("#"+id).click({id: id},popup);
+    	},
+    	closeAllPopups: function(){
+    		$(window).click(close_all_popups);
+    	},    	
+    	isColor: function(id){
+    		$("#"+id).on("click",".color",{id: id},is_color);
+    	},
+    	saveColor: function(button,notification){
+    		$(button).click({button: button, notification: notification},save_color);
+    	},
+    	setColor: function(courses,colors){
+    		for (var i = 0; i < courses.length; i++) {
+    			$('#course-'+courses[i]).css('backgroundColor',colors[i]);
+    		}
     	}
+    	
     };
 });

@@ -6,66 +6,6 @@ M.block_course_overview_ext = M.block_course_overview_ext || {
 		//M.block_course_overview_ext.superclass.constructor.call(this,Y);
 }
 
-M.block_course_overview_ext.addresize = function(Y){
-	
-//	M.block_course_overview_ext.Y = Y;
-	  
-	window.addEventListener("resize", resize, true);
-	resize();
-	  
-	//die resize-funktion wird 3mal drangehangen....warum auch immer....
-	 function resize(){
-		  var course_list = Y.one(".block_course_overview_ext .course_list");
-		  if(course_list){
-			 var array = course_list.all(".coursebox");
-			 var columns = 3;
-			 //var height = 81;
-		  	var margin = 20;
-		  	
-		  if(array){
-			  if(course_list.get("offsetWidth") < 700){
-				  var columns = 1;
-			  }else if(course_list.get("offsetWidth") < 970){
-				  var columns = 2;
-			  }
-			  var width = (course_list.get("offsetWidth") - margin*columns) /columns -5;			//columns-1 //die -10 sind nur um rechts ein bisschen platz zu haben..damit ein scrollbalken nicht alles zerstört
-			  var sizearray = [width];
-			  
-			  for(var i = 1; i < columns; ++i){
-				  sizearray[sizearray.length]=sizearray[i-1]+width+margin;
-			  }			  			
-		  		function setneededWidth(o){
-		  			var width = o.one("a").get("offsetWidth");
-		  				var i = 0;
-		  				while(i<sizearray.length && sizearray[i] < width){
-		  					++i;
-		  				}
-		  				o.set("offsetWidth",sizearray[i]);
-		  				//o.set("offsetHeight",height);
-		  		}
-		  			
-		  			array.each(function (node){
-		  				setneededWidth(node);	//.one(".course_title .title a") und dafpr das bei der fkt weg
-		  			});
-				  		
-		  			
-//						  array.each(function (node){
-//				  				node.remove("width");		//funktioniert nicht
-//				  			});
-		  			
-		  			//LÖSUNG-> berechne einmalig für jeden Sprung die prozente von einem Block!
-		  			
-		  	}
-		  
-		  }
-
-	  }
-	 
- //------------------------- 
-  
-
-};
-
 M.block_course_overview_ext.pop = function(Y, id, cid) {
     Y.use('anim', function(Y) {
         new M.block_course_overview_ext.PopUp(Y, id, cid);
