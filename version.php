@@ -18,7 +18,8 @@
  * Version details
  *
  * @package    block_course_overview_ext
- * @copyright  2015 Jan Eberhardt <eberhardt@math.tu-berlin.de>, Nicolas Klenert <klenert@math.tu-berlin.de>
+ * @auhtor     Jan Eberhardt <eberhardt@math.tu-berlin.de>
+ * @author     Nicolas Klenert <klenert@math.tu-berlin.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @uses       package block_coure_overview is needed!
  */
