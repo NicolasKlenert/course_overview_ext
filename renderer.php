@@ -113,7 +113,8 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 	$width = clean_param(get_config('block_course_overview_ext','colorcolumns'),PARAM_INT) * 32;
                 	
                 	$html .= $this->popup_region($this->get_colors($course->id),'colorpicker_'.$course->id ,$course->id, $coloricon, 'changecolor',array('style' => 'width: '.$width.'px;'));
-                	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'isColor', array('colorpicker_'.$course->id.'_popup'));	//das popup kommt von der funktion popup_region
+                	//option true, falls sofort bei jedem Schritt die Änderung gespeichert werden soll
+                	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'isColor', array('colorpicker_'.$course->id.'_popup',true));	//das popup kommt von der funktion popup_region
                 }
                 
             }
@@ -295,18 +296,19 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
         $output .= $this->output->render($select);
         
 		//Button zur Speicherung der Farben (Link wird von Javascript überschrieben und verändert!)
+		//wurde entfernt(jede Änderung wird sofort gespeichert). Steht hier nur nur, falls der Wunsch existiert, wieder Buttons zu nutzen
     	if (get_user_preferences("course_overview_view",-1) == 2){
-    		$select = block_course_overview_ext_saveColors($url, ' btn-disabled');
-    		$select = $this->output->render($select) 
-    		//only if you want mid-screen
-    		. $this->mid_screen('Erfolgreich gespeichert!');
+//     		$select = block_course_overview_ext_saveColors($url, ' btn-disabled');
+//     		$select = $this->output->render($select) 
+//     		//only if you want mid-screen
+//     		. $this->mid_screen('Erfolgreich gespeichert!');
     		
-    		$button = block_course_overview_ext_resetColors($url);
-    		$button = $this->output->render($button);
+//     		$button = block_course_overview_ext_resetColors($url);
+//     		$button = $this->output->render($button);
     		
-    		$output .= html_writer::div($select . $button,'co_saveColor');
-    		//last paremeter only if you want mid-screen => option?
-    		$this->page->requires->js_call_amd('block_course_overview_ext/tiles','saveColor',array('.co_saveColor .singlebutton:first-child','.co_midscreen_container'));		//(something,'.co_midscreen_container')
+//     		$output .= html_writer::div($select . $button,'co_saveColor');
+//     		//last paremeter only if you want mid-screen => option?
+//     		$this->page->requires->js_call_amd('block_course_overview_ext/tiles','saveColor',array('.co_saveColor .singlebutton:first-child','.co_midscreen_container'));
     	}
         
         $output .= $this->output->box_end();
@@ -333,7 +335,6 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
     	
     	//$this->page->requires->js_init_call('M.block_course_overview_ext.pop', array($id,$cid));
     	$this->page->requires->js_call_amd('block_course_overview_ext/tiles', 'pop',array($id));
-    	
     	return $output;
     }
     

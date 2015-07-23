@@ -21,11 +21,7 @@ define(['jquery'], function($) {
 		while(i < sizearray.length && sizearray[i] < width){
 			++i;
 		}
-		o.width(prozentarray[i]+'%');
-		//o.outerWidth(prozentarray[i]+'%');
-		//o.css("width",sizearray[i]);
-		//o.set("offsetHeight",height);
-		
+		o.width(prozentarray[i]+'%');		
 	};
 	
 	var setColumns = function(){
@@ -75,10 +71,14 @@ define(['jquery'], function($) {
      };
  
      var popup = function(event){
+    	 //schau on das eigene popup visible ist
+    	 var bool = $("#"+event.data.id+" .co_popup").hasClass("visible");
     	//mache alle popups invisible
     	 $(".co_popup").removeClass("visible");	//:not(#"+event.data.id+")
     	 //änder die sichtbarkeit des eigenen popups
-    	 $("#"+event.data.id+" .co_popup").toggleClass("visible");
+    	 if(bool === false){
+    		 $("#"+event.data.id+" .co_popup").toggleClass("visible");
+    	 }
     	 //stop propagation
     	 return false;
      };
@@ -91,7 +91,11 @@ define(['jquery'], function($) {
     	 var color = $(event.target).css("backgroundColor");
     	 //color = rgb2hex(color);
     	 $("#"+event.data.id).parents(".coursebox").css("backgroundColor",color);
-    	 $(".co_saveColor .singlebutton").removeClass("btn-disabled");
+    	 if(event.data.save === true){
+    		 save_color();
+    	 }else{
+        	 $(".co_saveColor .singlebutton").removeClass("btn-disabled");
+    	 }
     	 return false;
      };  
      
@@ -113,54 +117,91 @@ define(['jquery'], function($) {
     	  return ("0" + parseInt(x).toString(16)).slice(-2);
      };
      
-     var save_color = function(event){
-    	 var courselist = [];
-    	 var colorlist = [];
+     var save_color = function(){
     	 
-    	 $('.course_list').children().each(function(index,element){
-    		courselist[courselist.length] = $(element).attr('id').substring(7);
-    		colorlist[colorlist.length] = rgb2hex($(element).css('backgroundColor')).toUpperCase();
-    	 });
+    	 //speicher nur zeug, wenn der button anklickbar ist
+       	var courselist = [];
+       	var colorlist = [];
+       	
+       	$('.course_list').children().each(function(index,element){
+       		courselist[courselist.length] = $(element).attr('id').substring(7);
+       		colorlist[colorlist.length] = rgb2hex($(element).css('backgroundColor')).toUpperCase();
+       	});
+       	
+       	var params = {
+               sesskey : M.cfg.sesskey,
+               courselist : courselist,
+               colorlist : colorlist
+        };
+       	 
+       	var callback = function(){};
+       	//window.console.log($.param(params));
+       	 
+       	$.ajax(M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php', {
+       		method: 'POST',
+       		data: $.param(params),
+       		context: M.block_course_overview_ext,
+       		success: function(){
+       			//window.console.log("success");
+       		},
+       		error: function(){		//xhr,text,error
+       			//window.console.log("error");
+       			//window.console.log(error);
+       			//window.console.log(xhr.getResponseHeader());
+       		},
+       		complete: function(){
+       			callback();
+       		}
+       	});
+    	return false;	// notwendig?
+     };
+     
+     var save_color_button = function(event){
     	 
-    	 var params = {
-      	       sesskey : M.cfg.sesskey,
-      	       courselist : courselist,
-      	       colorlist : colorlist
-      	 };
-    	 
-    	 var callback = function(){};
-    	 if($(".co-notification")){
-    		 callback = function(){
-    			 fadeOut(event.data.notification);
-    			 $(event.data.button).addClass("btn-disabled");
-    		 };
-    	 }
-    	     
-    	 //window.console.log($.param(params));
-    	 
-    	 $.ajax(M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php', {
-	        method: 'POST',
-	        data: $.param(params),
-	        context: M.block_course_overview_ext,
-	        success: function(){
-	        	//window.console.log("success");
-	        },
-    	 	error: function(){		//xhr,text,error
-    	 		//window.console.log("error");
-    	 		//window.console.log(error);
-    	 		//window.console.log(xhr.getResponseHeader());
-    	 	},
-	        complete: function(){
-	        	callback();
-	        }
-	    });
-    	 
-//    	 $.post(
-//    			M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php',
-//    			params,
-//    			callback
-//    	 ); 		    
-    		    
+    	 //speicher nur zeug, wenn der button anklickbar ist
+    	var disabled = $(event.data.button).hasClass("btn-disabled");
+    	if(!disabled){
+    		var courselist = [];
+       	 	var colorlist = [];
+       	 
+       	 	$('.course_list').children().each(function(index,element){
+       	 		courselist[courselist.length] = $(element).attr('id').substring(7);
+       	 		colorlist[colorlist.length] = rgb2hex($(element).css('backgroundColor')).toUpperCase();
+       	 	});
+       	 
+       	 	var params = {
+         	       sesskey : M.cfg.sesskey,
+         	       courselist : courselist,
+         	       colorlist : colorlist
+         	 };
+       	 
+       	 	var callback = function(){};
+       	 	if($(".co-notification")){
+       	 		callback = function(){
+       	 			fadeOut(event.data.notification);
+       	 			$(event.data.button).addClass("btn-disabled");
+       	 		};
+       	 	}
+       	     
+       	 //window.console.log($.param(params));
+       	 
+       	 	$.ajax(M.cfg.wwwroot+'/blocks/course_overview_ext/color_save.php', {
+       	 		method: 'POST',
+       	 		data: $.param(params),
+       	 		context: M.block_course_overview_ext,
+       	 		success: function(){
+       	 			//window.console.log("success");
+       	 		},
+       	 		error: function(){		//xhr,text,error
+       	 			//window.console.log("error");
+       	 			//window.console.log(error);
+       	 			//window.console.log(xhr.getResponseHeader());
+       	 		},
+       	 		complete: function(){
+       	 			callback();
+       	 		}
+       	 	});
+    	}
     	 return false;	// notwendig?
      };
      
@@ -177,11 +218,11 @@ define(['jquery'], function($) {
     	closeAllPopups: function(){
     		$(window).click(close_all_popups);
     	},    	
-    	isColor: function(id){
-    		$("#"+id).on("click",".color",{id: id},is_color);
+    	isColor: function(id,save){
+    		$("#"+id).on("click",".color",{id: id, save: save},is_color);
     	},
-    	saveColor: function(button,notification){
-    		$(button).click({button: button, notification: notification},save_color);
+    	saveColorButton: function(button,notification){
+    		$(button).click({button: button, notification: notification},save_color_button);
     	},
     	setColor: function(courses,colors){
     		for (var i = 0; i < courses.length; i++) {
