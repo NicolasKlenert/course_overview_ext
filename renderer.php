@@ -105,7 +105,7 @@ class block_course_overview_ext_renderer extends block_course_overview_renderer 
                 if (get_user_preferences("course_overview_view",-1) == 2) {
 
                 	$coloricon = html_writer::empty_tag('img',
-                			array('src' => $this->pix_url('e/text_highlight')->out(false),
+                			array('src' => $this->pix_url('e/text_highlight_picker')->out(false),
                 			'alt' => get_string('colorcourse','block_course_overview_ext',$course->fullname),
                 			'title' => get_string('selectcolor','editor'))
                 	);
