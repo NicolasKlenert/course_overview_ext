@@ -89,8 +89,13 @@ define(['jquery'], function($) {
      
      var is_color = function(event){
     	 var color = $(event.target).css("backgroundColor");
-    	 //color = rgb2hex(color);
-    	 $("#"+event.data.id).parents(".coursebox").css("backgroundColor",color);
+    	 //funktioniert nicht, nachdem der Kurs verschoben wurde (.parents/.closest holt nicht mehr das richtige
+    	 //Dom Element!!)
+    	 //$("#"+event.data.id).parents(".coursebox").css("backgroundColor",color);
+    	 var str = event.data.id;
+    	 var id = str.slice(str.indexOf("_")+1,str.lastIndexOf("_"));
+    	 $("#course-"+id).closest(".coursebox").css("backgroundColor",color);
+
     	 if(event.data.save === true){
     		 save_color();
     	 }else{
@@ -119,7 +124,6 @@ define(['jquery'], function($) {
      
      var save_color = function(){
     	 
-    	 //speicher nur zeug, wenn der button anklickbar ist
        	var courselist = [];
        	var colorlist = [];
        	

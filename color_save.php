@@ -33,4 +33,12 @@ $courselist = required_param_array('courselist', PARAM_INT);
 $colorlist = required_param_array('colorlist', PARAM_TEXT);
 //$coursecolor = required_param('coursecolor', PARAM_STRING);
 
+//testen ob colorlist auch nur hex-codes enthält.
+foreach ($colorlist as $key => $color){
+	if(!ctype_xdigit(ltrim($color,"#"))){
+		//falls es kein hex-code ist, lösche den eintrag
+		unset ($colorlist[$key]);
+	}
+}
+
 block_course_overview_ext_update_coursecolor($courselist, $colorlist);
