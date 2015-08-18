@@ -126,21 +126,21 @@ div img.iconextra {
     margin-right:-16px;
 }
 
-/* view Gestaltung */
+/* view Gestaltung; also die Kachelansicht*/
 
-.editing .view.co_pics .changecolor{
+.editing .block_course_overview_ext.view.co_pics .changecolor{
 	float: right;
 	position: relative;
 	cursor: pointer;
 }
 
-.editing .view.co_pics .changecolor .co_popup{
+.editing .block_course_overview_ext.view.co_pics .changecolor .co_popup{
 	/*width: 96px;*/
 	padding: 3px;
 	cursor: auto;
 }
 
-.editing .view.co_pics .changecolor .co_popup .color{
+.editing .block_course_overview_ext.view.co_pics .changecolor .co_popup .color{
 	width: 20px;
 	height: 20px;
 	border: 1px solid #CCC;
@@ -149,13 +149,13 @@ div img.iconextra {
 	cursor: pointer;
 }
 
-.editing .view .move {
+.editing .block_course_overview_ext.view .move {
   padding: 0;
 }
-.view .block {
+.block_course_overview_ext.view .block {
   overflow: overlay;
 }
-.view .coursebox {
+.block_course_overview_ext.view .coursebox {
   min-height: 36px;
   margin: 5px 10px 10px 10px;
   padding: 15px;
@@ -168,29 +168,35 @@ div img.iconextra {
   position: relative; /* damit die Icons immer an der selben Stelle stehen, egal wie groß der Text ist */
 }
 
-.view.tiles .coursebox{
+.block_course_overview_ext.view.tiles .coursebox{
 	float: left;
   /* display: inline-table;		/* wenn dies nicht geht, mache wieder float */
 }
 
-.block.view .content {
+.block_course_overview_ext.view.tiles .coursebox .course_title .title a{
+	display: inline-block;
+	max-height: 34px;
+	text-overflow: ellipsis;
+}
+
+.block_course_overview_ext.block.view .content {
   margin: 0;
   padding: 8px 0 0 0;
 }
-.view .content .box.notice {
+.block_course_overview_ext.view .content .box.notice {
   padding: 4px 14px 0 14px;
 }
-.view .editing .block_course_overview .move {
+.block_course_overview_ext.view .editing .block_course_overview .move {
   position: absolute;
 }
-.view .jsenabled .collapsed .collapsibleregion {
+.block_course_overview_ext.view .jsenabled .collapsed .collapsibleregion {
   visibility: visible;
 }
-.view .activity_overview {
+.block_course_overview_ext.view .activity_overview {
     display: inline;
     position: relative;
 }
-.view .content h2.title {			
+.block_course_overview_ext.view .content h2.title {			
 	text-align: center;
 	margin: 0 20px;
 }
@@ -204,7 +210,7 @@ div img.iconextra {
 
 
 /*Popup css*/
-.co_popup {
+.block_course_overview_ext .co_popup {
 	position: absolute;
 	right: auto;
 	left: 0px;
@@ -218,33 +224,33 @@ div img.iconextra {
 }
 
 /* Popup for Changecolor*/
-.changecolor .co_popup {
+.block_course_overview_ext .changecolor .co_popup {
 	right: 0px;
 	left: auto;
 }
 
-.co_popup{
+.block_course_overview_ext .co_popup{
 	display: none;
 }
-.co_popup.visible {
+.block_course_overview_ext .co_popup.visible {
 	display: block;
 }
 
-.co_saveColor .singlebutton{
+.block_course_overview_ext .co_saveColor .singlebutton{
 	width: 22em;
 	display: inline-block;
 }
 
-.co_saveColor .singlebutton div{
+.block_course_overview_ext .co_saveColor .singlebutton div{
 	margin-left: 0;
 	margin-right: 0;
 }
 
-.co_saveColor .singlebutton div input{
+.block_course_overview_ext .co_saveColor .singlebutton div input{
 	margin: 0;
 }
 
-.co_midscreen_container{
+.block_course_overview_ext .co_midscreen_container{
     width: 100%;
     height: 100%;
     z-index: 999999;
@@ -255,7 +261,7 @@ div img.iconextra {
     background-color: rgba(22,22,22,0.1);
 }
 
-.co_notification {
+.block_course_overview_ext .co_notification {
 	/* width: 20em; */
 	width: 30%;
 	position: relative;
@@ -268,7 +274,7 @@ div img.iconextra {
 	background-size: contain;
 } */
 
-.view.co_pics .content .course_title {			
+.block_course_overview_ext.view.co_pics .content .course_title {			
 	background-color: white;
 	background-color: rgba(255,255,255,0.9);
 	border-radius: 10px;

@@ -6,13 +6,19 @@
  */
  
  /**
-  * @module block_overview/tiles
+  * @module block_overview_ext/tiles
   */
 define(['jquery'], function($) {
 	
+	//define all functions and variables
+	
+	//array with the size of the blocks in pixel
 	var sizearray;
+	//array with the size of the blocks calculated in %
 	var prozentarray;
+	//how many columns should exist
 	var columns;
+	//all course-blocks
 	var course_list = $(".block_course_overview_ext .course_list");
 	
 	var setneededWidth = function(o){
@@ -86,6 +92,10 @@ define(['jquery'], function($) {
      var close_all_popups = function(){
     	 $(".co_popup").removeClass("visible");
      };
+     
+//     var close_popup = function(event){
+//    	$(event.currentTarget).removeClass("visible");
+//     };
      
      var is_color = function(event){
     	 var color = $(event.target).css("backgroundColor");
@@ -221,6 +231,9 @@ define(['jquery'], function($) {
     	},
     	closeAllPopups: function(){
     		$(window).click(close_all_popups);
+    		//Einstellung, dass die PopUps verschwinden, wennd die Maus aus dem Fenster geht
+    		//funtkion wurde wegem blödem grunt auch auskommentiert
+    		//$('.co_popup').mouseleave(close_popup); 
     	},    	
     	isColor: function(id,save){
     		$("#"+id).on("click",".color",{id: id, save: save},is_color);
