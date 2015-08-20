@@ -42,6 +42,23 @@ define(['jquery'], function($) {
 		return (columns != alt_columns);
 	};
 	
+	var ellipsifySubfunction2 = function(index,text){
+		return text.replace(/\W*\s(\S)*$/, '...');
+	};
+	
+	var ellipsifySubfunction1 = function(index,title){
+		var a = $(title).children("a");	//alternativ ist $(this).children() möglich
+		//var height = $(title).height();		//nehme die feste höhe von 2 zeilen!
+		while (a.outerHeight() > 34){
+			a.text(ellipsifySubfunction2);
+		}
+	};
+	
+	var ellipsify = function(){
+		var titles = $('.block_course_overview_ext.view.tiles .coursebox .course_title .title');
+		titles.each(ellipsifySubfunction1);
+	};
+	
     var resize = function(){
 
 		  if(course_list){
@@ -70,6 +87,8 @@ define(['jquery'], function($) {
 		  		});
 		  			
 		  	}
+		  
+		  ellipsify();
 		  
 		  }
 

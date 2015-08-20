@@ -156,7 +156,7 @@ div img.iconextra {
   overflow: overlay;
 }
 .block_course_overview_ext.view .coursebox {
-  min-height: 36px;
+  min-height: 40px;
   margin: 5px 10px 10px 10px;
   padding: 15px;
   padding-bottom: 39px;
@@ -173,11 +173,17 @@ div img.iconextra {
   /* display: inline-table;		/* wenn dies nicht geht, mache wieder float */
 }
 
-.block_course_overview_ext.view.tiles .coursebox .course_title .title a{
+.block_course_overview_ext.view.tiles .coursebox .course_title .title{
+	overflow: hidden;
+	min-height: 19px;
+	max-height: 34px;
+}
+
+/*.block_course_overview_ext.view.tiles .coursebox .course_title .title a{
 	display: inline-block;
 	max-height: 34px;
 	text-overflow: ellipsis;
-}
+}*/
 
 .block_course_overview_ext.block.view .content {
   margin: 0;
